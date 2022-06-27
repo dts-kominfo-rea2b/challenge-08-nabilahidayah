@@ -35,33 +35,37 @@
       const output = document.getElementById("todo-output");
 
       let inputValue = "";
+
       // TODO: Buatlah sebuah fungsi dengan nama fnClickHandler
       // Fungsi yang digunakan untuk menambahkan tulisan
       // Jangan ubah cara deklarasi fungsinya, cukup isi saja
       function fnClickHandler(toDoItem) {
-        console.log(toDoItem);
-        if (toDoItem.target.type === "submit" || toDoItem.key === "Enter") {
-          console.log(dataInput);
-          var node = document.createElement("li");
-          node.appendChild(document.createTextNode(dataInput));
-          document.querySelector("ul").appendChild(node);
+        if (toDoItem?.type === "click" || toDoItem?.key === "Enter" || toDoItem?.which === 13) {
+          const li = document.createElement("li");
+          const textValue = document.createTextNode(inputValue);
+          li.appendChild(textValue);
+          const list = output.children;
+          output.append(li, ...list);
+
+          inputValue = "";
           input.value = "";
-          dataInput = "";
         }
       }
 
-      function tampungData(valueKey) {
-        dataInput = valueKey.target.value;
+      function fnHandleInputChange(event) {
+        if (event?.target?.value?.length > 0) {
+          inputValue = event?.target?.value;
+        }
       }
 
       // TODO: register event onclick / addEventListener untuk button
       // akan menjalankan fungsi fnClickHandler
-      input.addEventListener("keypress", fnClickHandler);
+      button.addEventListener("click", fnClickHandler);
 
       // TODO: register event onkeypress / addEventListener untuk input
       // sehingga saat di input ditekan enter akan menjalankan fungsi fnClickHandler juga
-      input.addEventListener("keyup", tampungData);
-      button.addEventListener("click", fnClickHandler);
+      input.addEventListener("keyup", fnHandleInputChange);
+      input.addEventListener("keypress", fnClickHandler);
     </script>
   </body>
 </html>
